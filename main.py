@@ -10,6 +10,8 @@ from spotify_recommendation_engine import get_token, get_recommendations
 # from discord.ext import commands
 import os
 
+from keep_alive import keep_alive
+keep_alive()
 #important lines for discord bot to work
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 discord.opus.load_opus("./libopus.so.0.8.0")
