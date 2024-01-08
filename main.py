@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 import asyncio
 from youtubesearchpython import VideosSearch
-from spotify_recommendation_engine import get_token, get_recommendations
+from spotify_recommendation_engine import *
 # from discord.ext import commands
 import os
 
@@ -150,8 +150,10 @@ async def player(interaction:discord.Interaction, info: dict):
   global start
   start = time.time()
 
+  token = get_token()
+  
   global lyrics
-  lyrics = syncedlyrics.search(last_played_song+' '+info['result'][0]['channel']['name'])
+  lyrics = syncedlyrics.search(get_track_name(token,track_to_trackid(token,last_played_song)))
   
   interaction.guild.voice_client.play(source, after=lambda e: asyncio.run_coroutine_threadsafe(play_next_song(interaction,msg), bot.loop).result())
 
@@ -164,7 +166,7 @@ async def play(interaction: discord.Interaction, query: str):
   if await joinhelper(interaction) == False:
     return
 
-  result = VideosSearch(query, limit = 1).result()
+  result = VideosSearch(query+"official audio", limit = 1).result()
   title = result['result'][0]['title']
   embed = discord.Embed(
     title="🎶 Song Added to Queue",

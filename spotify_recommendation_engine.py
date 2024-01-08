@@ -58,6 +58,14 @@ def get_recommendations(token,track_name):
   result = json.loads(result.content)
   return result["tracks"][0]["name"] + " by "+ result["tracks"][0]["artists"][0]["name"]
 
+def get_track_name(token,track_id):
+  url = f"https://api.spotify.com/v1/tracks/{track_id}"
+  headers = {"Authorization": "Bearer " + token}
+  result = get(url,headers=headers)
+  result=json.loads(result.content)
+  return result['name'] + " " + result["artists"][0]["name"]
+
+
 #token = get_token()
 
 # print(get_recommendations(token,"Blinding lights"))
