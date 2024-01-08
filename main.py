@@ -192,11 +192,14 @@ async def play_next_song(interaction: discord.Interaction, msg:discord.Message):
       global recommendations
       if recommendations:
         msg = await interaction.channel.send("## 🔍 Finding Song Recommendations")
-        token = get_token()
-        next_song = get_recommendations(token,last_played_song)
-        await msg.delete()
-        result = VideosSearch(next_song, limit=1).result()
-        await player(interaction, result)
+        try:
+          token = get_token()
+          next_song = get_recommendations(token,last_played_song)
+          await msg.delete()
+          result = VideosSearch(next_song, limit=1).result()
+          await player(interaction, result)
+        except:
+          msg.edit(content="## ❎ Couldn't Find Song")
       else:
         embed = discord.Embed(title="❎ No more songs in the Queue!")
         await interaction.channel.send(embed=embed)
