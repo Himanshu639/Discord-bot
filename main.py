@@ -20,6 +20,7 @@ intents.message_content = True
 
 bot = discord.Bot()
 token = os.environ['token']
+stop_lyrics = True
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #global variables
@@ -206,6 +207,8 @@ async def play_next_song(interaction: discord.Interaction, msg:discord.Message):
 @bot.command(name="skip", description="Skips the current song")
 async def skip(interaction: discord.Interaction):
     if interaction.guild.voice_client and interaction.guild.voice_client.is_playing():
+        global stop_lyrics
+        stop_lyrics = False
         interaction.guild.voice_client.stop()
         embed = discord.Embed(title="✅ Skipped the current song.")
         await interaction.response.send_message(embed=embed)
@@ -237,6 +240,8 @@ async def song_recommendations(interaction: discord.Interaction, autoplay:bool):
 async def lyricshelper(th:discord.Thread):
   global start
   global lyrics
+  global stop_lyrics
+  stop_lyrics = True
   ourtime = 0
   entries = re.findall(r'\[(\d+:\d+\.\d+)?\]\s*(.*?)\s*(?=\[\d+:\d+\.\d+\]|$)', lyrics, re.DOTALL)
 
@@ -244,6 +249,9 @@ async def lyricshelper(th:discord.Thread):
   while i<len(entries):
       timestamp, line = entries[i]
       total_seconds = (datetime.strptime(timestamp, "%M:%S.%f") - datetime(1900, 1, 1)).total_seconds()
+
+      if not stop_lyrics:
+        return
       while ourtime>=total_seconds:
         if line!='':
           await th.send(line)
@@ -253,6 +261,8 @@ async def lyricshelper(th:discord.Thread):
         break
       else:
         ourtime = time.time() - start
+
+      await asyncio.sleep(0.5)
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Synced Lyrics Function
