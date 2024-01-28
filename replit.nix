@@ -1,5 +1,9 @@
 { pkgs }: {
   deps = [
+    pkgs.firefox
+    pkgs.librespeed-cli
+    pkgs.speedtest-cli
+    pkgs.cmatrix
     pkgs.htop
     pkgs.heroku
     pkgs.ffmpeg.bin

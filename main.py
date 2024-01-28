@@ -147,6 +147,9 @@ async def player(interaction:discord.Interaction, info: dict):
     await msg.edit(content="## 🔊 Currently Playing",embed=embed)
 
   source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("song.m4a"))
+  
+  interaction.guild.voice_client.play(source, after=lambda e: asyncio.run_coroutine_threadsafe(play_next_song(interaction,msg), bot.loop).result())
+  # asyncio.sleep(1.5)
   global start
   start = time.time()
 
@@ -154,8 +157,6 @@ async def player(interaction:discord.Interaction, info: dict):
   
   global lyrics
   lyrics = syncedlyrics.search(get_track_name(token,track_to_trackid(token,last_played_song)))
-  
-  interaction.guild.voice_client.play(source, after=lambda e: asyncio.run_coroutine_threadsafe(play_next_song(interaction,msg), bot.loop).result())
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -201,7 +202,7 @@ async def play_next_song(interaction: discord.Interaction, msg:discord.Message):
           result = VideosSearch(next_song, limit=1).result()
           await player(interaction, result)
         except:
-          msg.edit(content="## ❎ Couldn't Find Song")
+          await msg.edit(content="## ❎ Couldn't Find Song")
       else:
         embed = discord.Embed(title="❎ No more songs in the Queue!")
         await interaction.channel.send(embed=embed)
@@ -247,6 +248,7 @@ async def lyricshelper(th:discord.Thread):
   global lyrics
   global stop_lyrics
   stop_lyrics = True
+  fix = 2
   ourtime = 0
   entries = re.findall(r'\[(\d+:\d+\.\d+)?\]\s*(.*?)\s*(?=\[\d+:\d+\.\d+\]|$)', lyrics, re.DOTALL)
 
@@ -257,10 +259,9 @@ async def lyricshelper(th:discord.Thread):
 
       if not stop_lyrics:
         return
-      while ourtime>=total_seconds:
+      while ourtime + fix>=total_seconds:
         if line!='':
           await th.send(line)
-          print(line)
         i+=1
         ourtime = time.time() - start
         break
