@@ -47,6 +47,17 @@ I required following dependencies to run the bot:
    python bot.py
    ```
 
+## Usage
+
+- `/play <song>` - Play the specified song in the voice channel.
+- `/skip` - Skip the currently playing song.
+- `/leave` - Stop the music playback and disconnect the bot from the voice channel.
+- `/get-lyrics` - Display synchronized lyrics for the currently playing song.
+- `/recommendations` - Toggles the recommendation ON or OFF.
+
+## Screenshot
+
+![Screenshot of Bot Commands](https://github.com/Himanshu639/Discord-bot/blob/main/Screenshot%202024-01-28%20205615.png)
 
 ## License
 
