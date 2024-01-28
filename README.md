@@ -25,6 +25,29 @@ I required following dependencies to run the bot:
 - [spotify-api](https://developer.spotify.com/documentation/web-api/) - Spotify Web API for music recommendations
 - [synced-lyrics](https://github.com/lo3me/syncedlyrics) - Module for fetching synchronized lyrics
 
+## Setup
+
+1. Clone this repository to your local machine:
+
+   ```
+   git clone https://github.com/yourusername/discord-music-bot.git
+   ```
+
+2. Install dependencies:
+
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Configure the necessary API keys and tokens for Spotify API and other modules.
+
+4. Run the bot:
+
+   ```
+   python bot.py
+   ```
+
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Himanshu639/Discord-bot/blob/main/LICENSE.md) file for details.
