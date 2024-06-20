@@ -37,7 +37,6 @@ rapidfuzz==3.9.3
 requests==2.32.3
 sniffio==1.3.1
 soupsieve==2.5
-speedtest-cli @ file:///build/speedtest-cli-2.1.3/dist/speedtest_cli-2.1.3-py2.py3-none-any.whl
 syncedlyrics==1.0.0
 typing-extensions==4.12.2
 urllib3==2.2.2
