@@ -254,14 +254,6 @@ async def lyricshelper(th:discord.Thread):
 
   i = 0
   while i<len(entries):
-  timestamp, line = entries[i]
-  total_seconds = (datetime.strptime(timestamp, "%M:%S.%f") - datetime(1900, 1, 1)).total_seconds()
-  ourtime = time.time() - start
-  if ourtime + fix < total_seconds:
-    break
-  else:
-    i++
-  while i<len(entries):
       timestamp, line = entries[i]
       total_seconds = (datetime.strptime(timestamp, "%M:%S.%f") - datetime(1900, 1, 1)).total_seconds()
 
